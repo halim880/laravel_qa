@@ -22,7 +22,7 @@
                     @csrf
                         <div class="form-group">
                             <label for="question-title">Question Title</label>
-                            <input type="text" name="title" class="form-control" id="question_title" required>
+                            <input type="text" name="title" class="form-control" value="{{old('title')}}" id="question_title" required>
                         </div>
                         <div class="form-group">
                             <label for="question-title">Explain Your Question</label>

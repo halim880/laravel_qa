@@ -6,3 +6,36 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.counters{
+    margin: 20px;
+    font-size: 10px;
+    text-align: center;
+
+    strong{
+        display: block;
+        font-size: 2em;
+    }
+    .votes, .answers{
+        height: 60px;
+        width: 60px;
+    }
+
+    .status{
+        &.unanswered{
+            border:none;
+        }
+        &.answered{
+            border: 1px solid $green;
+            color: $green;
+        }
+        &.answered_accepted{
+            background-color: $green;
+            color: white;
+        }
+    }
+    .votes{
+        margin: 10px;
+    }
+}

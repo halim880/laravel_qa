@@ -10928,3 +10928,38 @@ a.text-dark:focus {
   }
 }
 
+.counters {
+  margin: 20px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.counters strong {
+  display: block;
+  font-size: 2em;
+}
+
+.counters .votes,
+.counters .answers {
+  height: 60px;
+  width: 60px;
+}
+
+.counters .status.unanswered {
+  border: none;
+}
+
+.counters .status.answered {
+  border: 1px solid #38c172;
+  color: #38c172;
+}
+
+.counters .status.answered_accepted {
+  background-color: #38c172;
+  color: white;
+}
+
+.counters .votes {
+  margin: 10px;
+}
+

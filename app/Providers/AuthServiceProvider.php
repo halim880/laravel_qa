@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        App\Question::class => App\Policies\QuestionPolicy::class,
     ];
 
     /**
@@ -25,12 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        \Gate::define('edit-question', function($user, $question){
-            return $user->id == $question->user_id;
-        });
+        // \Gate::define('edit-question', function($user, $question){
+        //     return $user->id == $question->user_id;
+        // });
 
-        \Gate::define('delete-question', function($user, $question){
-            return $user->id == $question->user_id;
-        });
+        // \Gate::define('delete-question', function($user, $question){
+        //     return $user->id == $question->user_id;
+        // });
     }
 }

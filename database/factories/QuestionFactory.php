@@ -11,6 +11,5 @@ $factory->define(Question::class, function (Faker $faker) {
         'body'=> $faker->paragraphs(rand(3,5), true),
         'views'=> rand(0, 100),
         'votes'=> rand(0, 100),
-        'answers'=> rand(0, 100),
     ];
 });

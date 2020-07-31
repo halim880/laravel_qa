@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Question;
+use App\Answer;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -45,6 +46,16 @@ class User extends Authenticatable
     public function getUrlAttribute(){
         // return route('question.show', $this);
         return '#';
+    }
+
+    public function getAvatarAttribute(){
+        $email = $this->email;
+        $size = 32;
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
+    }
+
+    public function answers(){
+        return $this->hasMany(Answer::class);
     }
 
 }

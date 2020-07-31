@@ -27,7 +27,7 @@
                                 {{$question->views}} {{ __('view') }}
                             </div>
                             <div class="status {{$question->status}}">
-                                <strong>{{$question->answers}}</strong> {{ __('answers') }}
+                                <strong>{{$question->answers_count}}</strong> {{ __('answers') }}
                             </div>
                             <div class="votes">
                                <strong> {{$question->votes}}</strong> {{ __('votes') }}
@@ -37,16 +37,16 @@
                             <div class="d-flex align-items-center">
                                 <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}</a></h3>
                                 <div class="ml-auto">
-                                    @if (Auth::user()->can('edit-question', $question))
+                                    @can('update', $question)
                                         <a href="{{route('question.edit', $question)}}" class="btn btn-sm btn-outline-info">Edit</a> 
-                                    @endif
-                                    @if (Auth::user()->can('delete-question', $question))
+                                    @endcan
+                                    @can('delete', $question)
                                         <form class="form-delete" action="{{route('question.destroy', $question)}}" method="post">
                                             @csrf
                                             @method("DELETE")
                                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>                                        
-                                    @endif
+                                    @endcan
                                 </div>
                             </div>
                             <p class="lead">

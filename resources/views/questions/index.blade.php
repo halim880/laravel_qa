@@ -19,6 +19,7 @@
 
                 <div class="card-body">
                     @include('layouts._messages')
+
                    @foreach ($questions as $question)
                     <div class="media">
                         <div class="d-flex flex-column counters">
@@ -33,7 +34,21 @@
                             </div>
                         </div>
                         <div class="media-body">
-                            <h3 class="mt-0"><a href="{{url('question/show', $question)}}">{{$question->title}}</a></h3>
+                            <div class="d-flex align-items-center">
+                                <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}</a></h3>
+                                <div class="ml-auto">
+                                    @if (Auth::user()->can('edit-question', $question))
+                                        <a href="{{route('question.edit', $question)}}" class="btn btn-sm btn-outline-info">Edit</a> 
+                                    @endif
+                                    @if (Auth::user()->can('delete-question', $question))
+                                        <form class="form-delete" action="{{route('question.destroy', $question)}}" method="post">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>                                        
+                                    @endif
+                                </div>
+                            </div>
                             <p class="lead">
                                 Asked By
                                     <a href="{{$question->user->url}}">{{$question->user->name}}</a>

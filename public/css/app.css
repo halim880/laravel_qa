@@ -10967,3 +10967,28 @@ form.form-delete {
   display: inline;
 }
 
+.vote-controls span,
+.vote-controls a,
+.vote-controls i {
+  display: block;
+}
+
+.vote-controls a {
+  color: grey;
+  cursor: pointer;
+}
+
+.vote-controls a.off,
+.vote-controls a.off:hover {
+  color: lightgrey;
+}
+
+.vote-controls a.favorite.favorited,
+.vote-controls a.favorite.favorited:hover {
+  color: #f6993f;
+}
+
+.vote-controls a.answer-accepted {
+  color: green;
+}
+

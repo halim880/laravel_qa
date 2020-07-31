@@ -43,3 +43,26 @@
 form.form-delete{
     display: inline;
 }
+
+.vote-controls {
+    span, a, i{
+        display: block;
+    }
+    a{
+        color: grey;
+        cursor: pointer;
+
+        &.off, &.off:hover{
+            color: lightgrey;
+        }
+
+        &.favorite{
+            &.favorited, &.favorited:hover{
+                color: $orange;
+            }
+        }
+        &.answer-accepted{
+            color: green;
+        }
+    }
+}

@@ -6,66 +6,70 @@
         <div class="col-md-12">
             <div class="card">
                 
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2>{{$question->title}}</h2>
-                        <div class="ml-auto">
-                            <a href="{{route('question.index')}}">Goto Questions</a>
-                        </div>
-    
-                    </div>
-                    
-                </div>
-
-                <div class="card-body">
-                    {!! $question->body !!}
-                    <div class="float-right mt-3">
-                        <span class="text-muted">Asked {{$question->created_date}}</span>
-                        <div class="media mt-2">
-                            <a href="{{$question->user->url}}" class="pr-2">
-                                <img src="{{$question->user->avatar}}" alt="">
-                            </a>
-                            <div class="media-body">
-                                <a href="{{$question->user->url}}">{{$question->user->name}}</a>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div class="card">
                 <div class="card-body">
                     <div class="card-title">
-                        <h2>{{$question->answers_count}} Answers</h2>
+                        <div class="d-flex align-items-center">
+                            <h2>{{$question->title}}</h2>
+                            <div class="ml-auto">
+                                <a href="{{route('question.index')}}">Goto Questions</a>
+                            </div>        
+                        </div>
                     </div>
                     <hr>
-                    @foreach ($question->answers as $answer)
-                        <div class="media">
-                            <div class="media-body">
-                                {{$answer->body}}
-                                <div class="float-right mt-3">
-                                    <span class="text-muted">Answered {{$question->created_date}}</span>
-                                    <div class="media mt-2">
-                                        <a href="{{$answer->user->url}}" class="pr-2">
-                                            <img src="{{$answer->user->avatar}}" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <a href="{{$answer->user->url}}">{{$answer->user->name}}</a>
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-                                              
+    
+                    <div class="media">
+                        <div class="d-flex flex-column align-items-center vote-controls mr-2">
+                            <a href="" title="This is a useful question" class="vote-up">
+                                <i class="fa fa-caret-up fa-3x"></i>
+                            </a>
+                            <span class="votes-count">1230</span>
+                            <a href="" title="This is not useful" class="vote-down off">
+                                <i class="fa fa-caret-down fa-3x"></i>
+                            </a>
+                            <a href="" title="Click to mark as a favorite question" 
+                                class="d-flex align-items-center favorite {{Auth::guest() ? 'off':($question->is_favorited ? 'favorited':'')}}"
+                                onclick="event.preventDefault(); document.getElementById('favorite-question-{{$question->id}}').submit()"
+                                >
+                                <i class="fa fa-star fa-3x"></i>
+                                <form 
+                                    action="/question/favorites/{{$question->id}}" 
+                                    id="favorite-question-{{$question->id}}" 
+                                    method="post"
+                                    style="display:none;">
+                                    @csrf
+                                    @if ($question->is_favorited)
+                                        @method("DELETE");
+                                    @else
+                                        @method('POST')
+                                    @endif
+                                </form>
+                            </a>
+                            <span class="favorite-count">{{$question->favorites_count}}</span>
                         </div>
-                        <hr>
-                    @endforeach
+                        <div class="media-body">
+                            {!! $question->body !!}
+                            <div class="float-right mt-3">
+                                <span class="text-muted">Asked {{$question->created_date}}</span>
+                                <div class="media mt-2">
+                                    <a href="{{$question->user->url}}" class="pr-2">
+                                        <img src="{{$question->user->avatar}}" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="{{$question->user->url}}">{{$question->user->name}}</a>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
+    @include('answers._index', [
+        'answers'=> $question->answers,
+        'answersCount'=> $question->answers_count,
+    ])
+    @include('answers._create')
 </div>
 @endsection

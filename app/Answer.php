@@ -7,6 +7,8 @@ use App\User;
 use App\Question;
 class Answer extends Model
 {
+    protected $fillable = ['body'];
+    
     public function question(){
         return $this->belongsTo(Question::class);
     }
@@ -18,11 +20,32 @@ class Answer extends Model
         return $this->created_at->diffForHumans();
     }
 
+
+    public function getStatusAttribute(){
+        if($this->question->best_answer_id == $this->id){
+            return 'answer-accepted';
+        }
+    }
+
+    public function getIsBestAttribute(){
+        if($this->question->best_answer_id == $this->id){
+            return true;
+        }
+        return false;
+    }
+
     public static function boot(){
         parent::boot();
         static::created(function ($answer){
             $answer->question->increment('answers_count');
-            $answer->question->save();
+        });
+        static::deleted(function ($answer){
+            $question = $answer->question;
+            $question->decrement('answers_count');
+            if ($question->best_answer_id == $answer->id) {
+                $question->best_answer_id = NULL;
+                $question->save();
+            }
         });
     }
 }

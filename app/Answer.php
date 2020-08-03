@@ -7,6 +7,7 @@ use App\User;
 use App\Question;
 class Answer extends Model
 {
+    use VotableTrait;
     protected $fillable = ['body'];
     
     public function question(){
@@ -47,15 +48,5 @@ class Answer extends Model
                 $question->save();
             }
         });
-    }
-
-    public function votes(){
-        return $this->morphToMany(User::class, 'votable');
-    }
-    public function downVotes(){
-        return $this->votes()->wherePivot('vote', -1);
-    }
-    public function upVotes(){
-        return $this->votes()->wherePivot('vote', 1);
     }
 }

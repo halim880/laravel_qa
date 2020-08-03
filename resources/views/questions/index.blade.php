@@ -30,7 +30,7 @@
                                 <strong>{{$question->answers_count}}</strong> {{ __('answers') }}
                             </div>
                             <div class="votes">
-                               <strong> {{$question->votes}}</strong> {{ __('votes') }}
+                               <strong> {{$question->votes_count}}</strong> {{ __('votes') }}
                             </div>
                         </div>
                         <div class="media-body">

@@ -19,11 +19,15 @@
     
                     <div class="media">
                         <div class="d-flex flex-column align-items-center vote-controls mr-2">
-                            <a href="" title="This is a useful question" class="vote-up">
+                            <a href="" title="This is a useful question" 
+                                onclick="event.preventDefault(); document.getElementById('up_vote-question-{{$question->id}}').submit()"
+                                class="vote-up {{Auth::guest() ? 'off':''}}">
                                 <i class="fa fa-caret-up fa-3x"></i>
                             </a>
-                            <span class="votes-count">1230</span>
-                            <a href="" title="This is not useful" class="vote-down off">
+                            <span class="votes-count">{{$question->votes_count}}</span>
+                            <a href="" title="This is not useful" class="vote-down {{Auth::guest() ? 'off':''}}"
+                                onclick="event.preventDefault(); document.getElementById('down_vote-question-{{$question->id}}').submit()"
+                            >
                                 <i class="fa fa-caret-down fa-3x"></i>
                             </a>
                             <a href="" title="Click to mark as a favorite question" 
@@ -31,6 +35,24 @@
                                 onclick="event.preventDefault(); document.getElementById('favorite-question-{{$question->id}}').submit()"
                                 >
                                 <i class="fa fa-star fa-3x"></i>
+                                <form 
+                                    action="/question/vote/{{$question->id}}" 
+                                    id="up_vote-question-{{$question->id}}" 
+                                    method="post"
+                                    style="display:none;">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" name="vote" value="1">
+                                </form>
+                                <form 
+                                    action="/question/vote/{{$question->id}}" 
+                                    id="down_vote-question-{{$question->id}}" 
+                                    method="post"
+                                    style="display:none;">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" name="vote" value="-1">
+                                </form>
                                 <form 
                                     action="/question/favorites/{{$question->id}}" 
                                     id="favorite-question-{{$question->id}}" 
